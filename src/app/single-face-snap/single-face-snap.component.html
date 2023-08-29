@@ -1,24 +1,25 @@
 <!--On peut donc dire que la classe  snapped  doit s'ajouter uniquement si la variable  buttonText  contient la chaîne de caractères 'Oops, unSnap!'.-->
 <div
   class="face-snap-card"
-  [ngClass]="{ snapped: buttonLabel === 'Oops, un Snap' }">
+  [ngClass]="{ snapped: buttonText === 'Oops, un Snap' }">
   <!-- On met la premiére lettre des mots des titres en majuscule -->
-    <h2>{{ faceSnap.title | titlecase }}</h2>
+  <h2>{{ faceSnap.title | titlecase }}</h2>
+
+  <a routerLink="/facesnaps">Back</a>
   <!-- On change le format de la date -->
-  <!--<p>
+  <p>
     Mis en ligne le
     {{ faceSnap.createdDate | date : "à HH:mm, le d MMMM yyyy" }}
   </p>
-  <img [src]="faceSnap.imageUrl" [alt]="faceSnap.title" />-->
-    <p>{{ faceSnap.description }}</p>
-  <!--<p *ngIf="faceSnap.location">Photo prise à {{ faceSnap.location }}</p>
-  <p>-->
+  <img [src]="faceSnap.imageUrl" [alt]="faceSnap.title" />
+  <p>{{ faceSnap.description }}</p>
+  <p *ngIf="faceSnap.location">Photo prise à {{ faceSnap.location }}</p>
+  <p>
     <!--1. Ajouter un seul snap par image-->
-    <!--<button (click)="onSnap()">{{ buttonLabel }}</button>-->
+    <button (click)="onSnap()">{{ buttonText}}</button>
     <!--2. Changer la couleur de texte du nombre de snaps en fonction du nombre de snaps – c'est parti !-->
-    <!--<span [ngStyle]="{ color: 'rgb(0, ' + faceSnap.snaps + ', 0)' }"
+    <span [ngStyle]="{ color: 'rgb(0, ' + faceSnap.snaps + ', 0)' }"
       >🤌{{ faceSnap.snaps }}
     </span>
-  </p>-->
-    <button (click)="onViewFaceSnap()">VIEW</button>
+  </p>
 </div>

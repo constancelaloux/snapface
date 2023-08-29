@@ -1,22 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FaceSnap } from '../models/face-snap.model';
 import { FaceSnapsService } from '../services/face-snaps.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-face-snap',
-  templateUrl: './face-snap.component.html',
-  styleUrls: ['./face-snap.component.scss']
+  selector: 'app-single-face-snap',
+  templateUrl: './single-face-snap.component.html',
+  styleUrls: ['./single-face-snap.component.scss']
 })
-export class FaceSnapComponent implements OnInit{
-  @Input() faceSnap!: FaceSnap;
-  buttonLabel!: string;
+export class SingleFaceSnapComponent implements OnInit {
+  faceSnap!: FaceSnap;
+  buttonText!: string;
 
   constructor(private faceSnapsService: FaceSnapsService,
-    private router: Router){}
+    private route: ActivatedRoute){}
 
   ngOnInit(): void {
-    this.buttonLabel = 'Oh Snap';
+    this.buttonText = 'Oh Snap';
+    const snapId = +this.route.snapshot.params['id'];
+    this.faceSnap = this.faceSnapsService.getFaceSnapById(snapId);
   }
 
   onSnap(): void {
@@ -25,18 +27,11 @@ export class FaceSnapComponent implements OnInit{
     //3. Lorsqu'il passe a -1, le bouton réaffiche Oh Snap
     if (this.faceSnap.snaps === 0) {
       this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap');
-      this.buttonLabel = 'Oops, un Snap';
+      this.buttonText = 'Oops, un Snap';
     }
     else if(this.faceSnap.snaps === 1){
       this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'unsnap');
-      this.buttonLabel = 'Oh Snap';
+      this.buttonText = 'Oh Snap';
     }
   }
-
-  onViewFaceSnap(){
-    console.log(this.faceSnap.id);
-    this.router.navigateByUrl(`facesnaps/${this.faceSnap.id}`);
-  }
 }
-
-
